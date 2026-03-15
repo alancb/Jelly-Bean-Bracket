@@ -1,0 +1,383 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --slot-h: 38px;
+  --pill-font: 0.78rem;
+  --connector-color: #c8c8d0;
+  --connector-w: 18px;
+  --match-gap-r0: 6px;
+  --match-gap-r1: calc(var(--slot-h) + var(--match-gap-r0) * 2 + 6px);
+  --match-gap-r2: calc(var(--slot-h) * 3 + var(--match-gap-r0) * 6 + 18px);
+  --match-gap-r3: calc(var(--slot-h) * 7 + var(--match-gap-r0) * 14 + 38px);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #fff0f5 0%, #f5f0ff 30%, #f0f8ff 60%, #fffde7 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 16px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #C0152B, #F47B20, #E8C840, #5CB800, #0099CC, #7B3FA0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+#reset-btn {
+  background: #fff;
+  color: #555;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+#reset-btn:hover {
+  background: #f9f9f9;
+  border-color: #bbb;
+  color: #333;
+}
+
+/* ============================================================
+   ROUND LABELS
+   ============================================================ */
+#round-labels {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 24px 4px;
+  min-width: 1520px;
+  overflow: hidden;
+}
+
+.round-label-col {
+  flex: 1;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #aaa;
+}
+
+.champion-label {
+  color: goldenrod;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   BRACKET WRAPPER
+   ============================================================ */
+#bracket-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 24px 40px;
+}
+
+#bracket {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 1520px;
+  gap: 0;
+}
+
+/* ============================================================
+   BRACKET SIDES
+   ============================================================ */
+.bracket-side {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.bracket-left {
+  flex-direction: row;
+  gap: calc(var(--connector-w) * 2);
+}
+
+.bracket-right {
+  flex-direction: row;
+  gap: calc(var(--connector-w) * 2);
+}
+
+/* ============================================================
+   ROUNDS
+   ============================================================ */
+.round {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+  flex: 1;
+}
+
+/* ============================================================
+   MATCHES
+   ============================================================ */
+.match {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-block: var(--match-gap-r0);
+}
+
+.round[data-round="1"] .match { margin-block: var(--match-gap-r1); }
+.round[data-round="2"] .match { margin-block: var(--match-gap-r2); }
+.round[data-round="3"] .match { margin-block: var(--match-gap-r3); }
+
+/* Vertical line connecting the two slot stubs on the outward side */
+/* Left side: bar is to the RIGHT of the match */
+.bracket-left .match::before {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--connector-w) - 1px);
+  top: calc(var(--slot-h) / 2);
+  height: var(--slot-h);
+  width: 2px;
+  background: var(--connector-color);
+  z-index: 0;
+}
+
+/* Right side: bar is to the LEFT of the match */
+.bracket-right .match::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--connector-w) - 1px);
+  top: calc(var(--slot-h) / 2);
+  height: var(--slot-h);
+  width: 2px;
+  background: var(--connector-color);
+  z-index: 0;
+}
+
+/* The final match (championship) has no outgoing connector */
+.match.match-final::before {
+  display: none;
+}
+
+/* ============================================================
+   SLOTS
+   ============================================================ */
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--slot-h);
+  position: relative;
+  cursor: pointer;
+}
+
+/* Right-side slots: seed number on the right, pill on the left */
+.bracket-right .slot {
+  flex-direction: row-reverse;
+}
+
+/* Horizontal stub: left side extends RIGHT, right side extends LEFT */
+.bracket-left .slot::after {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--connector-w));
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--connector-w);
+  height: 2px;
+  background: var(--connector-color);
+}
+
+.bracket-right .slot::after {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--connector-w));
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--connector-w);
+  height: 2px;
+  background: var(--connector-color);
+}
+
+/* No outgoing connector on championship slots */
+.match-final .slot::after {
+  display: none;
+}
+
+.slot-bye,
+.slot-empty,
+.slot-loser {
+  cursor: default;
+}
+
+/* ============================================================
+   SEED NUMBER
+   ============================================================ */
+.seed-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #bbb;
+  min-width: 14px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bracket-right .seed-num {
+  text-align: left;
+}
+
+/* ============================================================
+   FLAVOR PILLS
+   ============================================================ */
+.flavor-pill {
+  background-color: var(--flavor-bg, #eee);
+  color: var(--flavor-text, #333);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: var(--pill-font);
+  font-weight: 600;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+  white-space: nowrap;
+  max-width: 148px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+  user-select: none;
+  display: block;
+}
+
+/* Hover on pickable slots */
+.slot:not(.slot-bye):not(.slot-empty):not(.slot-loser):hover .flavor-pill {
+  transform: scale(1.06);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+/* Winner */
+.slot-winner .flavor-pill {
+  box-shadow: 0 0 0 2.5px gold, 0 2px 8px rgba(218,165,32,0.45), inset 0 0 0 1px rgba(0,0,0,0.06);
+  transform: scale(1.04);
+}
+
+/* Loser */
+.slot-loser .flavor-pill {
+  opacity: 0.3;
+  text-decoration: line-through;
+}
+
+/* BYE */
+.slot-bye .flavor-pill {
+  opacity: 0.2;
+  font-style: italic;
+  background: #e0e0e0 !important;
+  color: #999 !important;
+  border-color: transparent !important;
+}
+
+/* Empty (future round, not yet determined) */
+.slot-empty .flavor-pill {
+  background: #efefef !important;
+  color: #bbb !important;
+  font-style: italic;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
+   CHAMPIONSHIP CENTER
+   ============================================================ */
+#championship {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-inline: 12px;
+  flex-shrink: 0;
+}
+
+#championship .match {
+  margin-block: 0;
+}
+
+/* Champion reveal */
+#champion-display {
+  text-align: center;
+  min-height: 36px;
+}
+
+#champion-display .champion-pill {
+  display: inline-block;
+  background-color: var(--flavor-bg, #ffd700);
+  color: var(--flavor-text, #333);
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 800;
+  border: 3px solid gold;
+  box-shadow: 0 0 18px rgba(218,165,32,0.6), 0 0 36px rgba(218,165,32,0.3);
+  animation: champion-pulse 2s ease-in-out infinite;
+}
+
+@keyframes champion-pulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(218,165,32,0.6), 0 0 36px rgba(218,165,32,0.3); }
+  50%       { box-shadow: 0 0 28px rgba(218,165,32,0.9), 0 0 56px rgba(218,165,32,0.5); }
+}
+
+#champion-display .champion-crown {
+  font-size: 1.3rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 700px) {
+  header {
+    padding: 14px 16px 12px;
+  }
+  h1 {
+    font-size: 1.2rem;
+  }
+  .subtitle {
+    font-size: 0.78rem;
+  }
+  #bracket-wrapper {
+    padding: 12px 12px 32px;
+  }
+}
