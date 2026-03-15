@@ -240,8 +240,7 @@ h1 {
 }
 
 .slot-bye,
-.slot-empty,
-.slot-loser {
+.slot-empty {
   cursor: default;
 }
 
@@ -283,7 +282,7 @@ h1 {
 }
 
 /* Hover on pickable slots */
-.slot:not(.slot-bye):not(.slot-empty):not(.slot-loser):hover .flavor-pill {
+.slot:not(.slot-bye):not(.slot-empty):hover .flavor-pill {
   transform: scale(1.06);
   box-shadow: 0 2px 10px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.06);
 }

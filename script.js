@@ -391,10 +391,9 @@
       const matchId = slot.dataset.matchId;
       if (!seed || !matchId) return;
 
-      // Only act on normal slots (not bye, empty, loser)
+      // Only act on pickable slots (not bye or empty)
       if (slot.classList.contains('slot-bye')) return;
       if (slot.classList.contains('slot-empty')) return;
-      if (slot.classList.contains('slot-loser')) return;
 
       pickWinner(matchId, seed);
     });
