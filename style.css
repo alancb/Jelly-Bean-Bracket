@@ -459,121 +459,113 @@ h1 {
 /* ============================================================
    HOST PANEL
    ============================================================ */
+
+/* Prevent CSS display properties from overriding the hidden attribute */
+[hidden] { display: none !important; }
+
+/* In host mode, the host panel replaces the normal header */
+body.host-mode header {
+  display: none !important;
+}
+
+/* Host panel: dark sticky bar that replaces the header */
 .host-panel {
-  background: rgba(255,255,255,0.97);
-  border-bottom: 2px solid rgba(218,165,32,0.3);
-  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #1c1830;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
 }
 
-.host-section {
+/* Top info bar: session code, QR, voter count, end button */
+.host-info-bar {
   display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 24px;
   flex-wrap: wrap;
-  gap: 20px;
-  align-items: flex-start;
-  width: 100%;
 }
 
-.host-session-info {
+.host-code-group {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 1px;
   flex-shrink: 0;
 }
 
-.host-code-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
 .host-label {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #aaa;
+  color: rgba(255,255,255,0.45);
 }
 
 .host-code {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 900;
-  letter-spacing: 6px;
-  color: #222;
+  letter-spacing: 8px;
+  color: #ffd700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
 
-.host-qr-block {
+.host-qr-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
+  flex-shrink: 0;
 }
 
 .host-qr {
-  width: 90px;
-  height: 90px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+  width: 68px;
+  height: 68px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .host-join-url {
-  font-size: 0.6rem;
-  color: #888;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.35);
   text-align: center;
-  max-width: 90px;
+  max-width: 80px;
   word-break: break-all;
 }
 
-.host-instructions {
-  font-size: 0.82rem;
-  color: #555;
-  max-width: 320px;
-  line-height: 1.6;
-  flex: 1;
-  min-width: 200px;
-}
-
-.host-instructions ol {
-  padding-left: 18px;
-  margin-top: 4px;
+.host-info-bar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
 }
 
 .host-voter-count {
-  font-size: 0.78rem;
-  color: #888;
-  align-self: flex-end;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
   white-space: nowrap;
 }
 
-.host-btn {
-  border-radius: 8px;
-  padding: 9px 20px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  transition: opacity 0.15s, transform 0.1s;
-  white-space: nowrap;
+/* Lobby hint row */
+.host-lobby-hint-row {
+  padding: 8px 24px;
+  background: rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
 }
-.host-btn:hover { opacity: 0.85; }
-.host-btn:active { transform: scale(0.97); }
 
-.host-btn-primary {
-  background: linear-gradient(135deg, #E8C840, #F4A020);
-  color: #6a3a00;
+/* Voting section */
+.host-voting-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
-.host-btn-secondary {
-  background: #f0f0f0;
-  color: #555;
-}
-.host-btn-danger {
-  background: #fff;
-  color: #c0152b;
-  border: 1.5px solid #e0b0b0;
-}
-.host-btn-danger:hover { background: #fff5f5; opacity: 1; }
 
 .host-vs-row {
   display: flex;
@@ -594,28 +586,28 @@ h1 {
 .host-contestant-pill {
   border-radius: 999px;
   padding: 8px 16px;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  max-width: 180px;
+  max-width: 200px;
   border: 2px solid rgba(0,0,0,0.1);
 }
 
 .host-vote-count {
-  font-size: 1.8rem;
+  font-size: 2.4rem;
   font-weight: 900;
-  color: #333;
+  color: #ffd700;
   line-height: 1;
 }
 
 .host-vote-bar-wrap {
   width: 100%;
-  height: 8px;
-  background: #eee;
+  height: 10px;
+  background: rgba(255,255,255,0.12);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -629,16 +621,16 @@ h1 {
 }
 
 .host-vs-label {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 900;
-  color: #ccc;
+  color: rgba(255,255,255,0.4);
   align-self: center;
   flex-shrink: 0;
 }
 
 .host-total-votes {
-  font-size: 0.78rem;
-  color: #999;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
   text-align: center;
   width: 100%;
 }
@@ -651,6 +643,35 @@ h1 {
   flex-wrap: wrap;
 }
 
+/* Buttons */
+.host-btn {
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.host-btn:hover { opacity: 0.85; }
+.host-btn:active { transform: scale(0.97); }
+
+.host-btn-primary {
+  background: linear-gradient(135deg, #E8C840, #F4A020);
+  color: #6a3a00;
+}
+.host-btn-secondary {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.85);
+}
+.host-btn-danger {
+  background: transparent;
+  color: rgba(255,120,120,0.9);
+  border: 1.5px solid rgba(255,120,120,0.4);
+}
+.host-btn-danger:hover { background: rgba(255,100,100,0.1); opacity: 1; }
+
 /* Active match pulse in host mode */
 .match.match-voting .flavor-pill {
   animation: host-pulse 1.4s ease-in-out infinite;
@@ -661,17 +682,41 @@ h1 {
   50%       { box-shadow: 0 0 0 4px rgba(218,165,32,1), 0 0 14px rgba(218,165,32,0.45), inset 0 0 0 1px rgba(0,0,0,0.06); }
 }
 
-/* Voteable matches in host mode: click anywhere to open voting */
+/* Voteable matches: permanent gold outline so they're obviously clickable */
 body.host-mode .match-voteable {
   cursor: pointer;
 }
 
-body.host-mode .match-voteable:hover .flavor-pill {
-  transform: scale(1.04);
-  box-shadow: 0 0 0 2px rgba(218,165,32,0.5), 0 2px 8px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(0,0,0,0.06);
+body.host-mode .match-voteable .flavor-pill {
+  outline: 2px solid rgba(218,165,32,0.7);
+  outline-offset: 1px;
 }
 
-/* Host mode: button in header active state */
+/* "Open Voting" overlay label appears on hover */
+body.host-mode .match-voteable::after {
+  content: '▶ Open Voting';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(218,165,32,0.92);
+  color: #5a3300;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+  z-index: 3;
+}
+
+body.host-mode .match-voteable:hover::after {
+  opacity: 1;
+}
+
+/* "Host a Game" button active state */
 #host-btn.host-active {
   background: linear-gradient(135deg, #E8C840, #F4A020);
   color: #6a3a00;

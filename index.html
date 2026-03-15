@@ -23,30 +23,29 @@
 
   <!-- Host Panel (hidden until host mode activated) -->
   <div id="host-panel" class="host-panel" hidden>
-    <div id="host-lobby" class="host-section">
-      <div class="host-session-info">
-        <div class="host-code-block">
-          <span class="host-label">Session Code</span>
-          <span id="host-session-code" class="host-code">----</span>
-        </div>
-        <div class="host-qr-block">
-          <img id="host-qr" class="host-qr" src="" alt="QR Code">
-          <div class="host-join-url" id="host-join-url"></div>
-        </div>
+    <!-- Top bar: always visible while hosting -->
+    <div class="host-info-bar">
+      <div class="host-code-group">
+        <span class="host-label">Session Code</span>
+        <span id="host-session-code" class="host-code">----</span>
       </div>
-      <div class="host-instructions">
-        <strong>How to run the game:</strong>
-        <ol>
-          <li>Audience scans the QR code or visits the URL above on their phone</li>
-          <li>Click <strong>"Open Voting"</strong> on any match in the bracket below</li>
-          <li>Watch the live votes, then click <strong>"Reveal &amp; Advance"</strong></li>
-        </ol>
+      <div class="host-qr-group">
+        <img id="host-qr" class="host-qr" src="" alt="QR Code">
+        <div class="host-join-url" id="host-join-url"></div>
       </div>
-      <div id="host-voter-count" class="host-voter-count">0 voters connected</div>
-      <button id="host-end-btn" class="host-btn host-btn-danger">End Session</button>
+      <div class="host-info-bar-right">
+        <div id="host-voter-count" class="host-voter-count">0 voters connected</div>
+        <button id="host-end-btn" class="host-btn host-btn-danger">End Session</button>
+      </div>
     </div>
 
-    <div id="host-voting-panel" class="host-section" hidden>
+    <!-- Lobby hint (shown when no active vote) -->
+    <div id="host-lobby" class="host-lobby-hint-row">
+      <span>&#x25BC; Click any highlighted match in the bracket below to open voting</span>
+    </div>
+
+    <!-- Voting panel (shown when vote is active) -->
+    <div id="host-voting-panel" class="host-voting-section" hidden>
       <div class="host-vs-row">
         <div class="host-contestant">
           <div class="host-contestant-pill" id="host-top-pill"></div>
