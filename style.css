@@ -457,6 +457,228 @@ h1 {
 }
 
 /* ============================================================
+   HOST PANEL
+   ============================================================ */
+.host-panel {
+  background: rgba(255,255,255,0.97);
+  border-bottom: 2px solid rgba(218,165,32,0.3);
+  padding: 16px 24px;
+}
+
+.host-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.host-session-info {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.host-code-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.host-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #aaa;
+}
+
+.host-code {
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: #222;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.host-qr-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.host-qr {
+  width: 90px;
+  height: 90px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.host-join-url {
+  font-size: 0.6rem;
+  color: #888;
+  text-align: center;
+  max-width: 90px;
+  word-break: break-all;
+}
+
+.host-instructions {
+  font-size: 0.82rem;
+  color: #555;
+  max-width: 320px;
+  line-height: 1.6;
+  flex: 1;
+  min-width: 200px;
+}
+
+.host-instructions ol {
+  padding-left: 18px;
+  margin-top: 4px;
+}
+
+.host-voter-count {
+  font-size: 0.78rem;
+  color: #888;
+  align-self: flex-end;
+  white-space: nowrap;
+}
+
+.host-btn {
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+.host-btn:hover { opacity: 0.85; }
+.host-btn:active { transform: scale(0.97); }
+
+.host-btn-primary {
+  background: linear-gradient(135deg, #E8C840, #F4A020);
+  color: #6a3a00;
+}
+.host-btn-secondary {
+  background: #f0f0f0;
+  color: #555;
+}
+.host-btn-danger {
+  background: #fff;
+  color: #c0152b;
+  border: 1.5px solid #e0b0b0;
+}
+.host-btn-danger:hover { background: #fff5f5; opacity: 1; }
+
+.host-vs-row {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.host-contestant {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.host-contestant-pill {
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  max-width: 180px;
+  border: 2px solid rgba(0,0,0,0.1);
+}
+
+.host-vote-count {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #333;
+  line-height: 1;
+}
+
+.host-vote-bar-wrap {
+  width: 100%;
+  height: 8px;
+  background: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.host-vote-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #E8C840, #F4A020);
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.host-vs-label {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #ccc;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.host-total-votes {
+  font-size: 0.78rem;
+  color: #999;
+  text-align: center;
+  width: 100%;
+}
+
+.host-voting-actions {
+  display: flex;
+  gap: 10px;
+  align-self: center;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* Active match pulse in host mode */
+.match.match-voting .flavor-pill {
+  animation: host-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes host-pulse {
+  0%, 100% { box-shadow: 0 0 0 2.5px rgba(218,165,32,0.7), inset 0 0 0 1px rgba(0,0,0,0.06); }
+  50%       { box-shadow: 0 0 0 4px rgba(218,165,32,1), 0 0 14px rgba(218,165,32,0.45), inset 0 0 0 1px rgba(0,0,0,0.06); }
+}
+
+/* Voteable matches in host mode: click anywhere to open voting */
+body.host-mode .match-voteable {
+  cursor: pointer;
+}
+
+body.host-mode .match-voteable:hover .flavor-pill {
+  transform: scale(1.04);
+  box-shadow: 0 0 0 2px rgba(218,165,32,0.5), 0 2px 8px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+/* Host mode: button in header active state */
+#host-btn.host-active {
+  background: linear-gradient(135deg, #E8C840, #F4A020);
+  color: #6a3a00;
+  border-color: transparent;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 700px) {

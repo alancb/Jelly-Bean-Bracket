@@ -104,6 +104,8 @@
       height: 44px;
       border-radius: 50%;
       background-color: var(--bean-color);
+      background-image: var(--bean-pattern, none);
+      background-size: cover;
       position: relative;
       box-shadow:
         0 4px 10px rgba(0,0,0,0.22),
@@ -230,35 +232,48 @@
 <script>
   const FLAVORS = [
     { name: 'Very Cherry',         color: '#C0152B' },
-    { name: 'Strawberry Jam',      color: '#E8304A' },
+    { name: 'Strawberry Jam',      color: '#E8304A',
+      pattern: 'radial-gradient(circle at 30% 55%, #9B1020 8%, transparent 8%), radial-gradient(circle at 65% 35%, #9B1020 6%, transparent 6%), radial-gradient(circle at 50% 70%, #B8203A 7%, transparent 7%), radial-gradient(circle at 75% 60%, #9B1020 5%, transparent 5%)' },
     { name: 'Red Apple',           color: '#C62C1E' },
     { name: 'Sizzling Cinnamon',   color: '#B3220F' },
     { name: 'Orange Soda',         color: '#F47B20' },
-    { name: 'Sweet Peach',         color: '#F4A460' },
-    { name: 'Chili Mango',         color: '#F4952A' },
-    { name: 'Orange Sherbet',      color: '#FFA040' },
+    { name: 'Sweet Peach',         color: '#F4A460',
+      pattern: 'radial-gradient(ellipse at 60% 40%, #E8845A 30%, transparent 60%), radial-gradient(circle at 35% 65%, #F0B87A 40%, transparent 60%)' },
+    { name: 'Chili Mango',         color: '#F4952A',
+      pattern: 'radial-gradient(circle at 25% 40%, #CC2200 5%, transparent 5%), radial-gradient(circle at 55% 65%, #CC2200 4%, transparent 4%), radial-gradient(circle at 70% 30%, #BB1100 3%, transparent 3%), radial-gradient(circle at 40% 75%, #CC2200 4%, transparent 4%)' },
+    { name: 'Orange Sherbet',      color: '#FFA040',
+      pattern: 'radial-gradient(ellipse at 55% 45%, #FFD0A0 35%, transparent 55%), radial-gradient(ellipse at 30% 65%, #FF8820 40%, transparent 55%)' },
     { name: 'Pink Grapefruit',     color: '#F2738C' },
     { name: 'Tangerine',           color: '#F28500' },
     { name: 'Top Banana',          color: '#FFDD00' },
     { name: 'Lemon',               color: '#FFF44F' },
-    { name: 'Piña Colada',         color: '#FFFACD' },
-    { name: 'Buttered Popcorn',    color: '#E8C840' },
-    { name: 'Vanilla Bean',        color: '#F5F0DC' },
+    { name: 'Piña Colada',         color: '#FFFACD',
+      pattern: 'radial-gradient(circle at 45% 50%, #FFF8E0 40%, transparent 60%), radial-gradient(circle at 70% 35%, #FAEAC0 30%, transparent 50%)' },
+    { name: 'Buttered Popcorn',    color: '#E8C840',
+      pattern: 'radial-gradient(circle at 28% 42%, #8B6010 7%, transparent 7%), radial-gradient(circle at 62% 30%, #8B6010 5%, transparent 5%), radial-gradient(circle at 48% 68%, #7A5008 6%, transparent 6%), radial-gradient(circle at 72% 58%, #8B6010 5%, transparent 5%), radial-gradient(circle at 20% 65%, #7A5008 4%, transparent 4%)' },
+    { name: 'Vanilla Bean',        color: '#F5F0DC',
+      pattern: 'radial-gradient(circle at 38% 45%, #3D1F00 2%, transparent 2%), radial-gradient(circle at 55% 38%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 44% 62%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 65% 55%, #3D1F00 2%, transparent 2%), radial-gradient(circle at 28% 58%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 60% 68%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 48% 28%, #3D1F00 1%, transparent 1%)' },
     { name: 'Cream Soda',          color: '#F5DEB3' },
-    { name: 'Coconut',             color: '#F8F8F0' },
+    { name: 'Coconut',             color: '#F8F8F0',
+      pattern: 'radial-gradient(circle at 35% 50%, #EDE8D8 35%, transparent 50%), radial-gradient(circle at 65% 40%, #E8E4D4 30%, transparent 45%), radial-gradient(circle at 50% 70%, #EAE6D6 25%, transparent 40%)' },
     { name: 'Lemon Lime',          color: '#A8D400' },
     { name: 'Juicy Pear',          color: '#B8D878' },
     { name: 'Sour Apple',          color: '#5CB800' },
-    { name: 'Watermelon',          color: '#FC5C7D' },
+    { name: 'Watermelon',          color: '#FC5C7D',
+      pattern: 'radial-gradient(circle at 32% 48%, #1A8C00 5%, transparent 5%), radial-gradient(circle at 52% 62%, #1A8C00 4%, transparent 4%), radial-gradient(circle at 68% 40%, #1A8C00 4%, transparent 4%), radial-gradient(circle at 44% 72%, #1A8C00 3%, transparent 3%), radial-gradient(circle at 22% 60%, #1A8C00 4%, transparent 4%)' },
     { name: 'Blue Raspberry',      color: '#0099CC' },
     { name: 'Blueberry',           color: '#4A5FA5' },
     { name: 'Grape Soda',          color: '#7B3FA0' },
     { name: 'Wild Blackberry',     color: '#4B0082' },
-    { name: 'Licorice',            color: '#1C1C1C' },
+    { name: 'Licorice',            color: '#1C1C1C',
+      pattern: 'repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(255,255,255,0.06) 6px, rgba(255,255,255,0.06) 8px)' },
     { name: 'Root Beer',           color: '#5C3317' },
-    { name: 'Toasted Marshmallow', color: '#D2A679' },
-    { name: 'Tutti-Fruitti',       color: '#FF69B4' },
-    { name: 'Cotton Candy',        color: '#FFB7D5' },
+    { name: 'Toasted Marshmallow', color: '#D2A679',
+      pattern: 'radial-gradient(ellipse at 40% 35%, #F5E8D0 35%, transparent 50%), radial-gradient(circle at 65% 55%, #A0622A 25%, transparent 40%), radial-gradient(circle at 30% 65%, #8C5020 20%, transparent 35%)' },
+    { name: 'Tutti-Fruitti',       color: '#FF69B4',
+      pattern: 'radial-gradient(circle at 28% 42%, #FFE800 8%, transparent 8%), radial-gradient(circle at 58% 32%, #00CC44 7%, transparent 7%), radial-gradient(circle at 72% 60%, #0088FF 7%, transparent 7%), radial-gradient(circle at 40% 68%, #FF4400 6%, transparent 6%), radial-gradient(circle at 18% 62%, #FFAA00 6%, transparent 6%)' },
+    { name: 'Cotton Candy',        color: '#FFB7D5',
+      pattern: 'linear-gradient(135deg, #99DDFF 0%, #BBEBFF 35%, #FFD0E8 55%, #FFB7D5 100%)' },
   ];
 
   const grid = document.getElementById('grid');
@@ -266,7 +281,7 @@
     grid.insertAdjacentHTML('beforeend', `
       <div class="card">
         <div class="bean-wrap">
-          <div class="bean" style="--bean-color: ${f.color}"></div>
+          <div class="bean" style="--bean-color: ${f.color}${f.pattern ? `; --bean-pattern: ${f.pattern}` : ''}"></div>
         </div>
         <div class="flavor-name">${f.name}</div>
         <div class="notes-box">

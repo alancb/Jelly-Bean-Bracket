@@ -384,6 +384,9 @@
     const bracket = document.getElementById('bracket');
 
     bracket.addEventListener('click', function (e) {
+      // In host mode, clicks are handled by host.js
+      if (document.body.classList.contains('host-mode')) return;
+
       const slot = e.target.closest('.slot');
       if (!slot) return;
 
@@ -424,4 +427,19 @@
   }
 
   init();
+
+  // ============================================================
+  // PUBLIC INTERFACE (used by host.js)
+  // ============================================================
+  window.bracketApp = {
+    getState:        () => state,
+    pickWinner:      pickWinner,
+    rerenderBracket: rerenderBracket,
+    parseMatchId:    parseMatchId,
+    getFlavorBySeed: getFlavorBySeed,
+    getTextColor:    getTextColor,
+    isByeSeed:       isByeSeed,
+    FLAVORS:         FLAVORS,
+  };
+
 })();

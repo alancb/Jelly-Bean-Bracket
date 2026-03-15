@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jelly Belly Flavor Showdown</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 <body>
   <header>
@@ -13,9 +16,57 @@
       <p class="subtitle">Signature 30 Collection &mdash; Pick your champion!</p>
     </div>
     <a href="resources.html" id="ref-btn">Flavor Reference Sheet</a>
+    <button id="host-btn">Host a Game</button>
     <button id="print-btn">Print Empty Bracket</button>
     <button id="reset-btn">Reset Bracket</button>
   </header>
+
+  <!-- Host Panel (hidden until host mode activated) -->
+  <div id="host-panel" class="host-panel" hidden>
+    <div id="host-lobby" class="host-section">
+      <div class="host-session-info">
+        <div class="host-code-block">
+          <span class="host-label">Session Code</span>
+          <span id="host-session-code" class="host-code">----</span>
+        </div>
+        <div class="host-qr-block">
+          <img id="host-qr" class="host-qr" src="" alt="QR Code">
+          <div class="host-join-url" id="host-join-url"></div>
+        </div>
+      </div>
+      <div class="host-instructions">
+        <strong>How to run the game:</strong>
+        <ol>
+          <li>Audience scans the QR code or visits the URL above on their phone</li>
+          <li>Click <strong>"Open Voting"</strong> on any match in the bracket below</li>
+          <li>Watch the live votes, then click <strong>"Reveal &amp; Advance"</strong></li>
+        </ol>
+      </div>
+      <div id="host-voter-count" class="host-voter-count">0 voters connected</div>
+      <button id="host-end-btn" class="host-btn host-btn-danger">End Session</button>
+    </div>
+
+    <div id="host-voting-panel" class="host-section" hidden>
+      <div class="host-vs-row">
+        <div class="host-contestant">
+          <div class="host-contestant-pill" id="host-top-pill"></div>
+          <div class="host-vote-count" id="host-top-count">0</div>
+          <div class="host-vote-bar-wrap"><div class="host-vote-bar" id="host-top-bar"></div></div>
+        </div>
+        <div class="host-vs-label">VS</div>
+        <div class="host-contestant">
+          <div class="host-contestant-pill" id="host-bottom-pill"></div>
+          <div class="host-vote-count" id="host-bottom-count">0</div>
+          <div class="host-vote-bar-wrap"><div class="host-vote-bar" id="host-bottom-bar"></div></div>
+        </div>
+      </div>
+      <div id="host-total-votes" class="host-total-votes">0 votes cast</div>
+      <div class="host-voting-actions">
+        <button id="host-reveal-btn" class="host-btn host-btn-primary">Reveal &amp; Advance</button>
+        <button id="host-cancel-vote-btn" class="host-btn host-btn-secondary">Cancel Voting</button>
+      </div>
+    </div>
+  </div>
 
   <div id="round-labels">
     <div class="round-label-col">Round of 32</div>
@@ -36,5 +87,7 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="host.js"></script>
 </body>
 </html>
