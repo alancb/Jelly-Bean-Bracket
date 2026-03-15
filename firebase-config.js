@@ -8,13 +8,13 @@
  * Security Rules in the console, not by keeping this file private.
  */
 window.FIREBASE_CONFIG = {
-  apiKey:            'AIzaSyDeMzyVNLk_fIY1XkNAo-Wxfk2a-qeqkbU',
-  authDomain:        'jelly-bean-bracket.firebaseapp.com',
+  apiKey:            'AIzaSyDQjD9v42CIzZW_oV7DBdij0xkrnffRHmw',
+  authDomain:        'jelly-bean-bracket-a9602.firebaseapp.com',
   // databaseURL: verify this in Firebase console → Realtime Database → Data tab
-  // It should look like: https://jelly-bean-bracket-default-rtdb.firebaseio.com
-  databaseURL:       'https://jelly-bean-bracket-default-rtdb.firebaseio.com',
-  projectId:         'jelly-bean-bracket',
-  storageBucket:     'jelly-bean-bracket.firebasestorage.app',
-  messagingSenderId: '743960351360',
-  appId:             '1:743960351360:web:af548920831ff91100cc65',
+  // It should look like: https://jelly-bean-bracket-a9602-default-rtdb.firebaseio.com
+  databaseURL:       'https://jelly-bean-bracket-a9602-default-rtdb.firebaseio.com',
+  projectId:         'jelly-bean-bracket-a9602',
+  storageBucket:     'jelly-bean-bracket-a9602.firebasestorage.app',
+  messagingSenderId: '396968042830',
+  appId:             '1:396968042830:web:51988b2cb05ea844a73e1f',
 };
