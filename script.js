@@ -167,8 +167,14 @@
     // Guard: BYE can't be picked
     if (isByeSeed(seedNum)) return;
 
-    // If re-clicking same winner, no-op
-    if (match.winnerId === seedNum) return;
+    // If re-clicking same winner, deselect and clear downstream
+    if (match.winnerId === seedNum) {
+      clearDownstream(state, round, matchIndex);
+      match.winnerId = null;
+      saveState();
+      rerenderBracket();
+      return;
+    }
 
     // If there was a previous winner, clear downstream from it
     if (match.winnerId !== null) {
@@ -368,7 +374,6 @@
     }
     bracket.appendChild(rightSide);
 
-    attachListeners();
   }
 
   // ============================================================
@@ -411,6 +416,7 @@
     }
 
     rerenderBracket();
+    attachListeners();
   }
 
   init();
