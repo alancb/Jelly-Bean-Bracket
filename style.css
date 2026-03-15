@@ -59,7 +59,8 @@ h1 {
   margin-top: 2px;
 }
 
-#reset-btn {
+#reset-btn,
+#host-btn {
   background: #fff;
   color: #555;
   border: 1.5px solid #ddd;
@@ -71,7 +72,8 @@ h1 {
   transition: background 0.15s, border-color 0.15s, color 0.15s;
   white-space: nowrap;
 }
-#reset-btn:hover {
+#reset-btn:hover,
+#host-btn:hover {
   background: #f9f9f9;
   border-color: #bbb;
   color: #333;
@@ -602,6 +604,7 @@ body.host-mode header {
   font-weight: 900;
   color: #ffd700;
   line-height: 1;
+  display: none; /* hidden from shared screen — revealed when Reveal & Advance is clicked */
 }
 
 .host-vote-bar-wrap {
@@ -610,6 +613,7 @@ body.host-mode header {
   background: rgba(255,255,255,0.12);
   border-radius: 999px;
   overflow: hidden;
+  display: none; /* hidden from shared screen */
 }
 
 .host-vote-bar {
