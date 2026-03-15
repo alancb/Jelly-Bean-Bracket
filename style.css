@@ -363,6 +363,22 @@ h1 {
   margin-bottom: 4px;
 }
 
+#ref-btn {
+  background: #fff;
+  color: #555;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+#ref-btn:hover { background: #f9f9f9; border-color: #bbb; color: #333; }
+
 #print-btn {
   background: #fff;
   color: #555;

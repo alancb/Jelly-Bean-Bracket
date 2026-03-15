@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jelly Belly Flavor Reference — Signature 30</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #f5f0ff 40%, #fffde7 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px 14px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #C0152B, #F47B20, #E8C840, #5CB800, #0099CC, #7B3FA0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: #fff;
+      color: #555;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn:hover { background: #f5f5f5; border-color: #bbb; color: #333; }
+
+    /* ── Grid ── */
+    main {
+      padding: 24px 28px 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* ── Jelly bean illustration ── */
+    .bean-wrap {
+      width: 80px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bean {
+      width: 68px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--bean-color);
+      position: relative;
+      box-shadow:
+        0 4px 10px rgba(0,0,0,0.22),
+        inset 0 -5px 10px rgba(0,0,0,0.18),
+        inset 0 2px 4px rgba(255,255,255,0.2);
+    }
+
+    /* Shine highlight */
+    .bean::after {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 11px;
+      width: 24px;
+      height: 13px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.42);
+      transform: rotate(-18deg);
+    }
+
+    /* ── Flavor name ── */
+    .flavor-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      color: #333;
+      line-height: 1.2;
+    }
+
+    /* ── Notes box ── */
+    .notes-box {
+      width: 100%;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 6px 8px;
+      min-height: 52px;
+      background: #fafafa;
+    }
+
+    .notes-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #bbb;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* Rating dots */
+    .rating {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid #ccc;
+      background: #fff;
+    }
+
+    /* ── Print ── */
+    @media print {
+      @page { size: landscape; margin: 0.3in; }
+
+      body { background: #fff !important; }
+      header { display: none !important; }
+
+      main { padding: 0 !important; }
+
+      .grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        max-width: none;
+      }
+
+      .card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        border-radius: 8px;
+        padding: 10px 8px;
+        gap: 6px;
+        break-inside: avoid;
+      }
+
+      .bean {
+        width: 56px;
+        height: 36px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .notes-box {
+        background: #fff !important;
+        min-height: 44px;
+      }
+
+      .dot { border-color: #aaa; }
+
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Jelly Belly Flavor Reference</h1>
+    <p class="subtitle">Signature 30 Collection — taste &amp; rate each flavor</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn" onclick="window.print()">Print Sheet</button>
+    <a class="btn" href="index.html">Back to Bracket</a>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<script>
+  const FLAVORS = [
+    { name: 'Very Cherry',         color: '#C0152B' },
+    { name: 'Strawberry Jam',      color: '#E8304A' },
+    { name: 'Red Apple',           color: '#C62C1E' },
+    { name: 'Sizzling Cinnamon',   color: '#B3220F' },
+    { name: 'Orange Soda',         color: '#F47B20' },
+    { name: 'Sweet Peach',         color: '#F4A460' },
+    { name: 'Chili Mango',         color: '#F4952A' },
+    { name: 'Orange Sherbet',      color: '#FFA040' },
+    { name: 'Pink Grapefruit',     color: '#F2738C' },
+    { name: 'Tangerine',           color: '#F28500' },
+    { name: 'Top Banana',          color: '#FFDD00' },
+    { name: 'Lemon',               color: '#FFF44F' },
+    { name: 'Piña Colada',         color: '#FFFACD' },
+    { name: 'Buttered Popcorn',    color: '#E8C840' },
+    { name: 'Vanilla Bean',        color: '#F5F0DC' },
+    { name: 'Cream Soda',          color: '#F5DEB3' },
+    { name: 'Coconut',             color: '#F8F8F0' },
+    { name: 'Lemon Lime',          color: '#A8D400' },
+    { name: 'Juicy Pear',          color: '#B8D878' },
+    { name: 'Sour Apple',          color: '#5CB800' },
+    { name: 'Watermelon',          color: '#FC5C7D' },
+    { name: 'Blue Raspberry',      color: '#0099CC' },
+    { name: 'Blueberry',           color: '#4A5FA5' },
+    { name: 'Grape Soda',          color: '#7B3FA0' },
+    { name: 'Wild Blackberry',     color: '#4B0082' },
+    { name: 'Licorice',            color: '#1C1C1C' },
+    { name: 'Root Beer',           color: '#5C3317' },
+    { name: 'Toasted Marshmallow', color: '#D2A679' },
+    { name: 'Tutti-Fruitti',       color: '#FF69B4' },
+    { name: 'Cotton Candy',        color: '#FFB7D5' },
+  ];
+
+  const grid = document.getElementById('grid');
+  FLAVORS.forEach(f => {
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="bean-wrap">
+          <div class="bean" style="--bean-color: ${f.color}"></div>
+        </div>
+        <div class="flavor-name">${f.name}</div>
+        <div class="notes-box">
+          <span class="notes-label">Notes</span>
+        </div>
+        <div class="rating">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    `);
+  });
+</script>
+</body>
+</html>
