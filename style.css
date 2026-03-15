@@ -363,6 +363,83 @@ h1 {
   margin-bottom: 4px;
 }
 
+#print-btn {
+  background: #fff;
+  color: #555;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+#print-btn:hover {
+  background: #f9f9f9;
+  border-color: #bbb;
+  color: #333;
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+  @page { size: landscape; margin: 0.35in; }
+
+  body {
+    background: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide UI chrome */
+  header, #round-labels { display: none !important; }
+
+  /* Print title */
+  #bracket-wrapper::before {
+    content: 'Jelly Belly Flavor Showdown';
+    display: block;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  #bracket-wrapper {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  #bracket {
+    min-width: auto !important;
+    width: 100%;
+    zoom: 0.62;
+  }
+
+  /* Reset all slot states — everyone looks "normal" */
+  .slot-winner .flavor-pill {
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1) !important;
+    transform: none !important;
+  }
+  .slot-loser .flavor-pill {
+    opacity: 1 !important;
+    text-decoration: none !important;
+  }
+
+  /* Make connector lines darker for print */
+  .bracket-left .slot::after,
+  .bracket-right .slot::after,
+  .bracket-left .match::before,
+  .bracket-right .match::before {
+    background: #888 !important;
+  }
+
+  /* No transitions/animations */
+  * { transition: none !important; animation: none !important; }
+}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */

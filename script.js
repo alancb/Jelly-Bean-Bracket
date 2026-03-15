@@ -403,8 +403,13 @@
   // INIT
   // ============================================================
 
+  function printEmptyBracket() {
+    window.print();
+  }
+
   function init() {
     document.getElementById('reset-btn').addEventListener('click', resetBracket);
+    document.getElementById('print-btn').addEventListener('click', printEmptyBracket);
 
     const saved = loadState();
     if (saved) {
