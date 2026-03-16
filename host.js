@@ -23,6 +23,11 @@
   let voterCountListener = null;
   let activeMatchId = null;
 
+  // Bracket mode state
+  let sessionMode = null; // 'live' | 'bracket'
+  let submissionCountListener = null;
+  let savedBracketState = null; // saved before swapping in consensus
+
   // Access the bracket app's public interface (set by script.js)
   const app = window.bracketApp;
 
@@ -37,6 +42,25 @@
       id += CHARSET[Math.floor(Math.random() * CHARSET.length)];
     }
     return id;
+  }
+
+  // ============================================================
+  // MODE MODAL
+  // ============================================================
+  function showModeModal() {
+    if (!FIREBASE_CONFIGURED) {
+      alert(
+        'Firebase is not configured yet.\n\n' +
+        'Open host.js and paste your Firebase project config at the top of the file.\n\n' +
+        'See the comments in host.js for setup instructions.'
+      );
+      return;
+    }
+    document.getElementById('mode-modal').hidden = false;
+  }
+
+  function hideModeModal() {
+    document.getElementById('mode-modal').hidden = true;
   }
 
   // ============================================================
@@ -333,16 +357,293 @@
   }
 
   // ============================================================
+  // BRACKET SUBMISSION MODE
+  // ============================================================
+
+  function initBracketMode() {
+    hideModeModal();
+
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(FIREBASE_CONFIG);
+      }
+      db = firebase.database();
+    } catch (e) {
+      alert('Firebase initialization failed. Check your config values.\n\n' + e.message);
+      return;
+    }
+
+    sessionMode = 'bracket';
+    sessionId = generateSessionId();
+    sessionRef = db.ref('sessions/' + sessionId);
+
+    sessionRef.set({
+      mode: 'bracket',
+      status: 'lobby',
+      submissionCount: 0,
+    }).then(() => {
+      activateBracketHostUI();
+    }).catch(err => {
+      alert('Could not create session: ' + err.message);
+    });
+  }
+
+  function activateBracketHostUI() {
+    document.body.classList.add('host-mode');
+    document.getElementById('host-btn').textContent = 'Hosting…';
+    document.getElementById('host-btn').classList.add('host-active');
+    document.getElementById('reset-btn').disabled = true;
+
+    const code = sessionId;
+    const voteUrl = buildVoteUrl(code);
+
+    document.getElementById('host-session-code').textContent = code;
+    document.getElementById('host-join-url').textContent = voteUrl;
+    document.getElementById('host-qr').src =
+      'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' +
+      encodeURIComponent(voteUrl);
+
+    document.getElementById('host-panel').hidden = false;
+    document.getElementById('host-lobby').hidden = false;
+    document.getElementById('host-voting-panel').hidden = true;
+    document.getElementById('host-bracket-controls').hidden = false;
+    document.getElementById('host-open-submissions-btn').hidden = false;
+    document.getElementById('host-close-results-btn').hidden = true;
+
+    voterCountListener = db.ref('sessions/' + sessionId + '/voterCount')
+      .on('value', snap => {
+        const n = snap.val() || 0;
+        document.getElementById('host-voter-count').textContent =
+          n + ' voter' + (n !== 1 ? 's' : '') + ' connected';
+      });
+
+    submissionCountListener = db.ref('sessions/' + sessionId + '/submissionCount')
+      .on('value', snap => {
+        const n = snap.val() || 0;
+        document.getElementById('host-submission-count').textContent =
+          n + ' bracket' + (n !== 1 ? 's' : '') + ' submitted';
+      });
+  }
+
+  function openSubmissions() {
+    if (!sessionRef) return;
+    sessionRef.update({ status: 'open' });
+    document.getElementById('host-open-submissions-btn').hidden = true;
+    document.getElementById('host-close-results-btn').hidden = false;
+  }
+
+  function closeAndShowResults() {
+    if (!sessionRef) return;
+
+    sessionRef.update({ status: 'closed' });
+
+    db.ref('sessions/' + sessionId + '/brackets').once('value').then(snap => {
+      const bracketsData = snap.val() || {};
+      const allBrackets = Object.values(bracketsData);
+
+      if (allBrackets.length === 0) {
+        alert('No brackets submitted yet!');
+        sessionRef.update({ status: 'open' });
+        document.getElementById('host-open-submissions-btn').hidden = true;
+        document.getElementById('host-close-results-btn').hidden = false;
+        return;
+      }
+
+      const consensus = computeConsensusBracket(allBrackets);
+      const leaderboard = computeLeaderboard(allBrackets);
+
+      sessionRef.update({ status: 'results' });
+
+      renderHostResults(consensus, leaderboard);
+      document.getElementById('host-close-results-btn').hidden = true;
+    });
+  }
+
+  function computeConsensusBracket(allBrackets) {
+    const consensus = app.buildInitialState();
+    app.autoAdvanceByes(consensus);
+
+    for (let r = 0; r < 5; r++) {
+      const matches = consensus.rounds[r];
+      for (let m = 0; m < matches.length; m++) {
+        const match = matches[m];
+        if (match.topSlot === null || match.bottomSlot === null) continue;
+        if (app.isByeSeed(match.topSlot) || app.isByeSeed(match.bottomSlot)) continue;
+        if (match.winnerId !== null) continue; // auto-advanced BYE
+
+        const votes = {};
+        for (const bracket of allBrackets) {
+          const sub = bracket.rounds && bracket.rounds[r] && bracket.rounds[r][m];
+          if (sub && sub.winnerId !== null) {
+            votes[sub.winnerId] = (votes[sub.winnerId] || 0) + 1;
+          }
+        }
+
+        const topVotes = votes[match.topSlot] || 0;
+        const bottomVotes = votes[match.bottomSlot] || 0;
+        match.winnerId = bottomVotes > topVotes ? match.bottomSlot : match.topSlot;
+        app.propagateWinner(consensus, r, m);
+      }
+    }
+
+    return consensus;
+  }
+
+  function computeLeaderboard(allBrackets) {
+    const totals = {};
+    for (let seed = 1; seed <= 30; seed++) totals[seed] = 0;
+
+    for (const bracket of allBrackets) {
+      for (let seed = 1; seed <= 30; seed++) {
+        let maxRound = -1;
+        for (let r = 0; r < 5; r++) {
+          if (!bracket.rounds || !bracket.rounds[r]) continue;
+          for (const match of bracket.rounds[r]) {
+            if (match.winnerId === seed && r > maxRound) maxRound = r;
+          }
+        }
+        totals[seed] += maxRound;
+      }
+    }
+
+    const n = allBrackets.length;
+    const results = [];
+    for (let seed = 1; seed <= 30; seed++) {
+      const flavor = app.getFlavorBySeed(seed);
+      results.push({
+        seed,
+        name: flavor.name,
+        color: flavor.color,
+        avgRound: n > 0 ? totals[seed] / n : -1,
+      });
+    }
+
+    results.sort((a, b) => b.avgRound - a.avgRound || a.seed - b.seed);
+    return results;
+  }
+
+  function renderHostResults(consensus, leaderboard) {
+    savedBracketState = JSON.parse(JSON.stringify(app.getState()));
+    app.setState(consensus);
+    app.rerenderBracket();
+
+    const championEl = document.getElementById('results-champion-display');
+    championEl.innerHTML = '';
+    if (consensus.champion) {
+      const flavor = app.getFlavorBySeed(consensus.champion);
+      const crown = document.createElement('span');
+      crown.textContent = '🏆 ';
+      const pill = document.createElement('span');
+      pill.className = 'results-champion-pill';
+      pill.textContent = flavor.name;
+      pill.style.backgroundColor = flavor.color;
+      pill.style.color = app.getTextColor(flavor.color);
+      championEl.appendChild(crown);
+      championEl.appendChild(pill);
+    }
+
+    const list = document.getElementById('results-leaderboard');
+    list.innerHTML = '';
+    leaderboard.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'results-lb-row';
+
+      const rank = document.createElement('span');
+      rank.className = 'results-lb-rank' + (idx < 3 ? ' top-three' : '');
+      rank.textContent = '#' + (idx + 1);
+
+      const pill = document.createElement('span');
+      pill.className = 'results-lb-pill';
+      pill.textContent = item.name;
+      pill.style.backgroundColor = item.color;
+      pill.style.color = app.getTextColor(item.color);
+
+      li.appendChild(rank);
+      li.appendChild(pill);
+      list.appendChild(li);
+    });
+
+    document.getElementById('results-banner').hidden = false;
+  }
+
+  function hideResults() {
+    if (savedBracketState) {
+      app.setState(savedBracketState);
+      app.rerenderBracket();
+      savedBracketState = null;
+    }
+    document.getElementById('results-banner').hidden = true;
+  }
+
+  function endBracketSession() {
+    if (!confirm('End the session? This will disconnect all players.')) return;
+
+    if (submissionCountListener) {
+      db.ref('sessions/' + sessionId + '/submissionCount').off('value', submissionCountListener);
+      submissionCountListener = null;
+    }
+    if (voterCountListener) {
+      db.ref('sessions/' + sessionId + '/voterCount').off('value', voterCountListener);
+      voterCountListener = null;
+    }
+
+    sessionRef.remove();
+
+    document.body.classList.remove('host-mode');
+    document.getElementById('host-btn').textContent = 'Host a Game';
+    document.getElementById('host-btn').classList.remove('host-active');
+    document.getElementById('reset-btn').disabled = false;
+    document.getElementById('host-panel').hidden = true;
+    document.getElementById('host-bracket-controls').hidden = true;
+    document.getElementById('results-banner').hidden = true;
+
+    if (savedBracketState) {
+      app.setState(savedBracketState);
+      savedBracketState = null;
+    }
+
+    db = null;
+    sessionId = null;
+    sessionRef = null;
+    sessionMode = null;
+
+    app.rerenderBracket();
+  }
+
+  // ============================================================
   // WIRE UP BUTTONS
   // ============================================================
   document.getElementById('host-btn').addEventListener('click', () => {
     if (sessionId) return; // already hosting
-    initHostMode();
+    showModeModal();
   });
 
-  document.getElementById('host-end-btn').addEventListener('click', endSession);
+  document.getElementById('host-end-btn').addEventListener('click', () => {
+    if (sessionMode === 'bracket') {
+      endBracketSession();
+    } else {
+      endSession();
+    }
+  });
+
   document.getElementById('host-reveal-btn').addEventListener('click', revealAndAdvance);
   document.getElementById('host-cancel-vote-btn').addEventListener('click', () => cancelVoting(true));
+
+  // Mode modal buttons
+  document.getElementById('mode-live-btn').addEventListener('click', () => {
+    hideModeModal();
+    sessionMode = 'live';
+    initHostMode();
+  });
+  document.getElementById('mode-bracket-btn').addEventListener('click', () => {
+    initBracketMode();
+  });
+  document.getElementById('mode-cancel-btn').addEventListener('click', hideModeModal);
+
+  // Bracket mode buttons
+  document.getElementById('host-open-submissions-btn').addEventListener('click', openSubmissions);
+  document.getElementById('host-close-results-btn').addEventListener('click', closeAndShowResults);
+  document.getElementById('results-back-btn').addEventListener('click', hideResults);
 
   // ============================================================
   // EXPOSE HELPERS TO vote.html (not needed in host.js itself,

@@ -21,6 +21,24 @@
     <button id="reset-btn">Reset Bracket</button>
   </header>
 
+  <!-- Mode selection modal -->
+  <div id="mode-modal" hidden>
+    <div class="mode-modal-box">
+      <div class="mode-modal-title">Choose a game mode</div>
+      <div class="mode-modal-options">
+        <button class="mode-option-btn" id="mode-live-btn">
+          <span class="mode-option-name">Live Voting</span>
+          <span class="mode-option-desc">Host one match at a time. Everyone votes in real time.</span>
+        </button>
+        <button class="mode-option-btn" id="mode-bracket-btn">
+          <span class="mode-option-name">Bracket Submission</span>
+          <span class="mode-option-desc">Everyone fills out a complete bracket, then see the group results.</span>
+        </button>
+      </div>
+      <button class="mode-modal-cancel" id="mode-cancel-btn">Cancel</button>
+    </div>
+  </div>
+
   <!-- Host Panel (hidden until host mode activated) -->
   <div id="host-panel" class="host-panel" hidden>
     <!-- Top bar: always visible while hosting -->
@@ -44,6 +62,13 @@
       <span>&#x25BC; Click any highlighted match in the bracket below to open voting</span>
     </div>
 
+    <!-- Bracket submission controls (shown in bracket mode) -->
+    <div id="host-bracket-controls" class="host-bracket-controls" hidden>
+      <span id="host-submission-count" class="host-submission-count">0 brackets submitted</span>
+      <button id="host-open-submissions-btn" class="host-btn host-btn-primary">Open Submissions</button>
+      <button id="host-close-results-btn" class="host-btn host-btn-primary" hidden>Close &amp; Show Results</button>
+    </div>
+
     <!-- Voting panel (shown when vote is active) -->
     <div id="host-voting-panel" class="host-voting-section" hidden>
       <div class="host-vs-row">
@@ -64,6 +89,19 @@
         <button id="host-reveal-btn" class="host-btn host-btn-primary">Reveal &amp; Advance</button>
         <button id="host-cancel-vote-btn" class="host-btn host-btn-secondary">Cancel Voting</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Results banner (bracket submission mode results) -->
+  <div id="results-banner" hidden>
+    <div class="results-banner-header">
+      <span class="results-banner-title">Group Results</span>
+      <div id="results-champion-display"></div>
+      <button id="results-back-btn" class="host-btn host-btn-secondary">&#x2190; Back to Live Bracket</button>
+    </div>
+    <div class="results-leaderboard-wrap">
+      <div class="results-lb-label">Rankings</div>
+      <ol id="results-leaderboard" class="results-leaderboard"></ol>
     </div>
   </div>
 

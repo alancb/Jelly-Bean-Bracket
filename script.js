@@ -432,14 +432,19 @@
   // PUBLIC INTERFACE (used by host.js)
   // ============================================================
   window.bracketApp = {
-    getState:        () => state,
-    pickWinner:      pickWinner,
-    rerenderBracket: rerenderBracket,
-    parseMatchId:    parseMatchId,
-    getFlavorBySeed: getFlavorBySeed,
-    getTextColor:    getTextColor,
-    isByeSeed:       isByeSeed,
-    FLAVORS:         FLAVORS,
+    getState:          () => state,
+    setState:          (newState) => { state = newState; },
+    pickWinner:        pickWinner,
+    rerenderBracket:   rerenderBracket,
+    parseMatchId:      parseMatchId,
+    getFlavorBySeed:   getFlavorBySeed,
+    getTextColor:      getTextColor,
+    isByeSeed:         isByeSeed,
+    FLAVORS:           FLAVORS,
+    SEED_PAIRS:        SEED_PAIRS,
+    buildInitialState: buildInitialState,
+    autoAdvanceByes:   autoAdvanceByes,
+    propagateWinner:   propagateWinner,
   };
 
 })();

@@ -271,6 +271,234 @@
       color: #333;
     }
 
+    /* ── Bracket fill-out view ── */
+    #view-bracket-fill {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    #bracket-progress {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #888;
+      text-align: center;
+    }
+
+    #bracket-matchups {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pick-card {
+      width: 100%;
+      background: rgba(255,255,255,0.85);
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .pick-card-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #bbb;
+      text-align: center;
+    }
+
+    .pick-btn {
+      width: 100%;
+      padding: 14px 18px;
+      border: 3px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 58px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .pick-btn:active { transform: scale(0.97); }
+
+    .pick-seed {
+      font-size: 0.68rem;
+      font-weight: 700;
+      opacity: 0.55;
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+
+    .pick-btn.pick-selected {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 3px gold, 0 4px 16px rgba(0,0,0,0.15);
+      border-color: transparent;
+    }
+
+    .pick-btn.pick-eliminated {
+      opacity: 0.28;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .pick-or {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #ccc;
+      text-align: center;
+    }
+
+    .bracket-nav-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    #bracket-next-btn {
+      flex: 1;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #E8C840, #F4A020);
+      color: #6a3a00;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    #bracket-next-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    #bracket-next-btn:not(:disabled):active { transform: scale(0.97); }
+
+    #bracket-back-btn {
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.9);
+      color: #666;
+      border: 1.5px solid #ddd;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── Bracket submitted / waiting ── */
+    #view-bracket-submitted {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* ── Bracket results view ── */
+    #view-bracket-results {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .results-champion-section {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .results-crown { font-size: 2.5rem; }
+
+    .results-champion-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #aaa;
+    }
+
+    .results-champion-pill {
+      border-radius: 999px;
+      padding: 12px 28px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      border: 3px solid gold;
+      box-shadow: 0 0 18px rgba(218,165,32,0.5), 0 0 36px rgba(218,165,32,0.25);
+    }
+
+    .results-leaderboard-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #aaa;
+      align-self: flex-start;
+    }
+
+    .br-leaderboard {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .br-leaderboard-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .br-rank {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #bbb;
+      min-width: 28px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .br-rank.top-three { color: goldenrod; }
+
+    .br-flavor-pill {
+      flex: 1;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 2px solid rgba(0,0,0,0.1);
+    }
+
+    /* Adjust main for scrollable views */
+    main.main-top {
+      justify-content: flex-start;
+    }
+
     /* ── Error / not found ── */
     #view-error {
       text-align: center;
@@ -336,6 +564,34 @@
     <div class="reveal-label">Winner</div>
     <div class="reveal-winner-pill" id="reveal-winner-pill"></div>
     <div class="reveal-loser-pill" id="reveal-loser-pill"></div>
+  </div>
+
+  <!-- Bracket fill-out -->
+  <div id="view-bracket-fill" hidden>
+    <div id="bracket-progress">Round 1 of 5 &middot; 0 / 14 picked</div>
+    <div id="bracket-matchups"></div>
+    <div class="bracket-nav-row">
+      <button id="bracket-back-btn" hidden>&#x2190; Back</button>
+      <button id="bracket-next-btn" disabled>Next Round &#x2192;</button>
+    </div>
+  </div>
+
+  <!-- Bracket submitted / waiting -->
+  <div id="view-bracket-submitted" hidden>
+    <div class="confirmed-icon">&#x2705;</div>
+    <div class="confirmed-title">Bracket submitted!</div>
+    <div class="confirmed-sub">Waiting for the host to close submissions&hellip;</div>
+  </div>
+
+  <!-- Bracket results -->
+  <div id="view-bracket-results" hidden>
+    <div class="results-champion-section">
+      <div class="results-crown">&#x1F3C6;</div>
+      <div class="results-champion-label">Group Champion</div>
+      <div id="br-champion-pill" class="results-champion-pill"></div>
+    </div>
+    <div class="results-leaderboard-title">Group Rankings</div>
+    <ol id="br-leaderboard" class="br-leaderboard"></ol>
   </div>
 
   <!-- Error / session not found -->
@@ -460,6 +716,14 @@
     }
 
     const session = snap.val();
+
+    // ── Bracket submission mode ──────────────────────────────
+    if (session.mode === 'bracket') {
+      handleBracketModeUpdate(session);
+      return;
+    }
+
+    // ── Live voting mode ────────────────────────────────────
     const status = session.status || 'lobby';
     const matchId = session.activeMatchId;
 
@@ -513,11 +777,16 @@
   }
 
   // ── Views ─────────────────────────────────────────────────
+  const ALL_VIEWS = ['waiting', 'voting', 'confirmed', 'revealed', 'error',
+                     'bracket-fill', 'bracket-submitted', 'bracket-results'];
+
   function showView(name) {
-    ['waiting', 'voting', 'confirmed', 'revealed', 'error'].forEach(v => {
+    ALL_VIEWS.forEach(v => {
       const el = document.getElementById('view-' + v);
       if (el) el.hidden = v !== name;
     });
+    const scrollable = name === 'bracket-fill' || name === 'bracket-results';
+    document.querySelector('main').classList.toggle('main-top', scrollable);
   }
 
   function showVoting(tSeed, bSeed) {
@@ -588,6 +857,389 @@
       round:      parseInt(rPart.replace('r', ''), 10),
       matchIndex: parseInt(mPart, 10),
     };
+  }
+
+  // ════════════════════════════════════════════════════════════
+  // BRACKET SUBMISSION MODE
+  // ════════════════════════════════════════════════════════════
+
+  const SEED_PAIRS_LOCAL = [
+    [1, 32], [16, 17], [8, 25], [9, 24],
+    [5, 28], [12, 21], [4, 29], [13, 20],
+    [3, 30], [14, 19], [6, 27], [11, 22],
+    [7, 26], [10, 23], [2, 31], [15, 18],
+  ];
+
+  const ROUND_NAMES = ['Round of 32', 'Round of 16', 'Quarterfinals', 'Semifinals', 'Final'];
+
+  function isByeSeedLocal(seed) { return seed === 31 || seed === 32; }
+
+  function buildLocalState() {
+    const rounds = [];
+    rounds[0] = SEED_PAIRS_LOCAL.map(([top, bottom], i) => ({
+      matchId: 'r0m' + i, topSlot: top, bottomSlot: bottom, winnerId: null,
+    }));
+    for (let r = 1; r < 5; r++) {
+      const count = Math.pow(2, 4 - r);
+      rounds[r] = Array.from({ length: count }, (_, i) => ({
+        matchId: 'r' + r + 'm' + i, topSlot: null, bottomSlot: null, winnerId: null,
+      }));
+    }
+    return { rounds, champion: null };
+  }
+
+  function propagateWinnerLocal(s, round, matchIndex) {
+    const winner = s.rounds[round][matchIndex].winnerId;
+    if (winner === null) return;
+    const nextRound = round + 1;
+    if (nextRound >= 5) { s.champion = winner; return; }
+    const parentMatchIndex = Math.floor(matchIndex / 2);
+    const parentMatch = s.rounds[nextRound][parentMatchIndex];
+    if (matchIndex % 2 === 0) {
+      parentMatch.topSlot = winner;
+    } else {
+      parentMatch.bottomSlot = winner;
+    }
+    if (parentMatch.topSlot !== null && isByeSeedLocal(parentMatch.topSlot)) {
+      parentMatch.winnerId = parentMatch.bottomSlot;
+      if (parentMatch.winnerId !== null) propagateWinnerLocal(s, nextRound, parentMatchIndex);
+    } else if (parentMatch.bottomSlot !== null && isByeSeedLocal(parentMatch.bottomSlot)) {
+      parentMatch.winnerId = parentMatch.topSlot;
+      if (parentMatch.winnerId !== null) propagateWinnerLocal(s, nextRound, parentMatchIndex);
+    }
+  }
+
+  function autoAdvanceByesLocal(s) {
+    s.rounds[0].forEach((match, i) => {
+      if (isByeSeedLocal(match.topSlot)) {
+        match.winnerId = match.bottomSlot;
+        propagateWinnerLocal(s, 0, i);
+      } else if (isByeSeedLocal(match.bottomSlot)) {
+        match.winnerId = match.topSlot;
+        propagateWinnerLocal(s, 0, i);
+      }
+    });
+  }
+
+  // ── Bracket fill-out state ──────────────────────────────────
+  let localState = null;
+  let picks = null;       // picks[round][matchIndex] = seedNum
+  let currentRound = 0;
+  let bracketInitialized = false;
+  let hasSubmittedBracket = false;
+
+  function rebuildLocalState() {
+    localState = buildLocalState();
+    autoAdvanceByesLocal(localState);
+    for (let r = 0; r < 5; r++) {
+      if (!picks[r]) continue;
+      for (let m = 0; m < localState.rounds[r].length; m++) {
+        const seedNum = picks[r][m];
+        if (seedNum == null) continue;
+        const match = localState.rounds[r][m];
+        if (match.topSlot !== seedNum && match.bottomSlot !== seedNum) continue;
+        if (isByeSeedLocal(seedNum)) continue;
+        match.winnerId = seedNum;
+        propagateWinnerLocal(localState, r, m);
+      }
+    }
+  }
+
+  function countRealMatches(round) {
+    return localState.rounds[round].filter(m =>
+      m.topSlot !== null && m.bottomSlot !== null &&
+      !isByeSeedLocal(m.topSlot) && !isByeSeedLocal(m.bottomSlot)
+    ).length;
+  }
+
+  function countPickedMatches(round) {
+    return localState.rounds[round].filter(m =>
+      m.topSlot !== null && m.bottomSlot !== null &&
+      !isByeSeedLocal(m.topSlot) && !isByeSeedLocal(m.bottomSlot) &&
+      m.winnerId !== null
+    ).length;
+  }
+
+  function renderRoundMatchups(round) {
+    const container = document.getElementById('bracket-matchups');
+    container.innerHTML = '';
+
+    const matches = localState.rounds[round];
+    let cardNum = 0;
+
+    matches.forEach((match, matchIndex) => {
+      if (match.topSlot === null || match.bottomSlot === null) return;
+      if (isByeSeedLocal(match.topSlot) || isByeSeedLocal(match.bottomSlot)) return;
+      cardNum++;
+
+      const topFlavor = getFlavorBySeed(match.topSlot);
+      const bottomFlavor = getFlavorBySeed(match.bottomSlot);
+
+      const card = document.createElement('div');
+      card.className = 'pick-card';
+
+      const label = document.createElement('div');
+      label.className = 'pick-card-label';
+      label.textContent = ROUND_NAMES[round] + ' \u00b7 Match ' + cardNum;
+
+      const topBtn = document.createElement('button');
+      topBtn.className = 'pick-btn' +
+        (match.winnerId === match.topSlot ? ' pick-selected' :
+          match.winnerId !== null ? ' pick-eliminated' : '');
+      topBtn.style.backgroundColor = topFlavor.color;
+      topBtn.style.color = getTextColor(topFlavor.color);
+      topBtn.innerHTML = '<span class="pick-seed">' + match.topSlot + '</span>' + topFlavor.name;
+      topBtn.onclick = () => selectPick(round, matchIndex, match.topSlot);
+
+      const orDiv = document.createElement('div');
+      orDiv.className = 'pick-or';
+      orDiv.textContent = '\u2014 or \u2014';
+
+      const bottomBtn = document.createElement('button');
+      bottomBtn.className = 'pick-btn' +
+        (match.winnerId === match.bottomSlot ? ' pick-selected' :
+          match.winnerId !== null ? ' pick-eliminated' : '');
+      bottomBtn.style.backgroundColor = bottomFlavor.color;
+      bottomBtn.style.color = getTextColor(bottomFlavor.color);
+      bottomBtn.innerHTML = '<span class="pick-seed">' + match.bottomSlot + '</span>' + bottomFlavor.name;
+      bottomBtn.onclick = () => selectPick(round, matchIndex, match.bottomSlot);
+
+      card.appendChild(label);
+      card.appendChild(topBtn);
+      card.appendChild(orDiv);
+      card.appendChild(bottomBtn);
+      container.appendChild(card);
+    });
+
+    const total = countRealMatches(round);
+    const picked = countPickedMatches(round);
+    document.getElementById('bracket-progress').textContent =
+      ROUND_NAMES[round] + ' \u00b7 ' + picked + ' / ' + total + ' picked';
+
+    const isLastRound = round === 4;
+    const nextBtn = document.getElementById('bracket-next-btn');
+    nextBtn.textContent = isLastRound ? 'Submit My Bracket' : 'Next Round \u2192';
+    nextBtn.disabled = picked < total;
+
+    const backBtn = document.getElementById('bracket-back-btn');
+    backBtn.hidden = round === 0;
+  }
+
+  function selectPick(round, matchIndex, seedNum) {
+    if (!picks[round]) picks[round] = [];
+    picks[round][matchIndex] = seedNum;
+    rebuildLocalState();
+    renderRoundMatchups(round);
+  }
+
+  function initBracketFillout() {
+    picks = Array.from({ length: 5 }, () => []);
+    localState = buildLocalState();
+    autoAdvanceByesLocal(localState);
+    currentRound = 0;
+    renderRoundMatchups(0);
+    showView('bracket-fill');
+  }
+
+  function handleBracketModeUpdate(session) {
+    const status = session.status || 'lobby';
+
+    if (status === 'results') {
+      db.ref('sessions/' + sessionCode + '/brackets').once('value').then(snap => {
+        const bracketsData = snap.val() || {};
+        const allBrackets = Object.values(bracketsData);
+        if (allBrackets.length === 0) { showView('waiting'); return; }
+        const consensus = computeConsensusBracket(allBrackets);
+        const leaderboard = computeLeaderboard(allBrackets);
+        renderBracketResults(consensus, leaderboard);
+        showView('bracket-results');
+      });
+      return;
+    }
+
+    if (status === 'closed') {
+      if (hasSubmittedBracket) {
+        showView('bracket-submitted');
+      } else {
+        document.getElementById('view-waiting').querySelector('.waiting-title').textContent =
+          'Submissions closed';
+        document.getElementById('view-waiting').querySelector('.waiting-sub').textContent =
+          'The host closed submissions. Results coming soon\u2026';
+        showView('waiting');
+      }
+      return;
+    }
+
+    if (status === 'open') {
+      if (hasSubmittedBracket) {
+        showView('bracket-submitted');
+        return;
+      }
+      // Check if already submitted this session
+      db.ref('sessions/' + sessionCode + '/brackets/' + clientId).once('value').then(snap => {
+        if (snap.exists()) {
+          hasSubmittedBracket = true;
+          showView('bracket-submitted');
+        } else if (!bracketInitialized) {
+          bracketInitialized = true;
+          initBracketFillout();
+        }
+        // If already initialized and showing bracket-fill, leave it as-is
+      });
+      return;
+    }
+
+    // status === 'lobby'
+    document.getElementById('view-waiting').querySelector('.waiting-title').textContent =
+      'Waiting to open\u2026';
+    document.getElementById('view-waiting').querySelector('.waiting-sub').textContent =
+      'The host will open submissions soon.';
+    showView('waiting');
+  }
+
+  function submitBracket() {
+    // Verify all rounds complete
+    for (let r = 0; r < 5; r++) {
+      if (countPickedMatches(r) < countRealMatches(r)) {
+        alert('Please pick a winner for every match first!');
+        currentRound = r;
+        renderRoundMatchups(r);
+        return;
+      }
+    }
+
+    const bracketData = {
+      rounds: localState.rounds,
+      champion: localState.champion,
+      submittedAt: Date.now(),
+    };
+
+    db.ref('sessions/' + sessionCode + '/brackets/' + clientId).set(bracketData)
+      .then(() => {
+        return db.ref('sessions/' + sessionCode + '/submissionCount')
+          .transaction(n => (n || 0) + 1);
+      })
+      .then(() => {
+        hasSubmittedBracket = true;
+        showView('bracket-submitted');
+      })
+      .catch(err => {
+        alert('Failed to submit. Please try again.\n' + err.message);
+      });
+  }
+
+  // Next / back nav
+  document.getElementById('bracket-next-btn').addEventListener('click', () => {
+    if (currentRound === 4) {
+      submitBracket();
+    } else {
+      currentRound++;
+      renderRoundMatchups(currentRound);
+      window.scrollTo(0, 0);
+    }
+  });
+
+  document.getElementById('bracket-back-btn').addEventListener('click', () => {
+    if (currentRound === 0) return;
+    const targetRound = currentRound - 1;
+    for (let r = currentRound; r < 5; r++) picks[r] = [];
+    rebuildLocalState();
+    currentRound = targetRound;
+    renderRoundMatchups(targetRound);
+    window.scrollTo(0, 0);
+  });
+
+  // ── Consensus & leaderboard computation (mirrors host.js) ──
+
+  function computeConsensusBracket(allBrackets) {
+    const consensus = buildLocalState();
+    autoAdvanceByesLocal(consensus);
+
+    for (let r = 0; r < 5; r++) {
+      const matches = consensus.rounds[r];
+      for (let m = 0; m < matches.length; m++) {
+        const match = matches[m];
+        if (match.topSlot === null || match.bottomSlot === null) continue;
+        if (isByeSeedLocal(match.topSlot) || isByeSeedLocal(match.bottomSlot)) continue;
+        if (match.winnerId !== null) continue;
+
+        const votes = {};
+        for (const bracket of allBrackets) {
+          const sub = bracket.rounds && bracket.rounds[r] && bracket.rounds[r][m];
+          if (sub && sub.winnerId !== null) {
+            votes[sub.winnerId] = (votes[sub.winnerId] || 0) + 1;
+          }
+        }
+
+        const topVotes = votes[match.topSlot] || 0;
+        const bottomVotes = votes[match.bottomSlot] || 0;
+        match.winnerId = bottomVotes > topVotes ? match.bottomSlot : match.topSlot;
+        propagateWinnerLocal(consensus, r, m);
+      }
+    }
+
+    return consensus;
+  }
+
+  function computeLeaderboard(allBrackets) {
+    const totals = {};
+    for (let seed = 1; seed <= 30; seed++) totals[seed] = 0;
+
+    for (const bracket of allBrackets) {
+      for (let seed = 1; seed <= 30; seed++) {
+        let maxRound = -1;
+        for (let r = 0; r < 5; r++) {
+          if (!bracket.rounds || !bracket.rounds[r]) continue;
+          for (const match of bracket.rounds[r]) {
+            if (match.winnerId === seed && r > maxRound) maxRound = r;
+          }
+        }
+        totals[seed] += maxRound;
+      }
+    }
+
+    const n = allBrackets.length;
+    const results = [];
+    for (let seed = 1; seed <= 30; seed++) {
+      const flavor = getFlavorBySeed(seed);
+      results.push({
+        seed, name: flavor.name, color: flavor.color,
+        avgRound: n > 0 ? totals[seed] / n : -1,
+      });
+    }
+    results.sort((a, b) => b.avgRound - a.avgRound || a.seed - b.seed);
+    return results;
+  }
+
+  function renderBracketResults(consensus, leaderboard) {
+    const champEl = document.getElementById('br-champion-pill');
+    if (consensus.champion) {
+      const flavor = getFlavorBySeed(consensus.champion);
+      champEl.textContent = flavor.name;
+      champEl.style.backgroundColor = flavor.color;
+      champEl.style.color = getTextColor(flavor.color);
+    }
+
+    const list = document.getElementById('br-leaderboard');
+    list.innerHTML = '';
+    leaderboard.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'br-leaderboard-row';
+
+      const rank = document.createElement('span');
+      rank.className = 'br-rank' + (idx < 3 ? ' top-three' : '');
+      rank.textContent = '#' + (idx + 1);
+
+      const pill = document.createElement('span');
+      pill.className = 'br-flavor-pill';
+      pill.textContent = item.name;
+      pill.style.backgroundColor = item.color;
+      pill.style.color = getTextColor(item.color);
+
+      li.appendChild(rank);
+      li.appendChild(pill);
+      list.appendChild(li);
+    });
   }
 
 })();
