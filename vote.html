@@ -464,10 +464,29 @@
       gap: 5px;
     }
 
+    .results-lb-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .br-col-labels {
+      display: flex;
+      gap: 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #bbb;
+    }
+    .br-col-group { min-width: 40px; text-align: center; }
+    .br-col-you   { min-width: 40px; text-align: center; }
+
     .br-leaderboard-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: 8px 12px;
       background: rgba(255,255,255,0.7);
       border-radius: 10px;
@@ -493,6 +512,20 @@
       font-weight: 700;
       border: 2px solid rgba(0,0,0,0.1);
     }
+
+    .br-my-rank {
+      font-size: 0.75rem;
+      font-weight: 800;
+      min-width: 40px;
+      text-align: center;
+      flex-shrink: 0;
+      border-radius: 6px;
+      padding: 3px 5px;
+      background: rgba(0,0,0,0.04);
+    }
+    .br-my-rank.rank-better { color: #2a9d3f; background: rgba(42,157,63,0.1); }
+    .br-my-rank.rank-worse  { color: #d94f3b; background: rgba(217,79,59,0.1); }
+    .br-my-rank.rank-same   { color: #aaa; }
 
     /* Adjust main for scrollable views */
     main.main-top {
@@ -590,7 +623,13 @@
       <div class="results-champion-label">Group Champion</div>
       <div id="br-champion-pill" class="results-champion-pill"></div>
     </div>
-    <div class="results-leaderboard-title">Group Rankings</div>
+    <div class="results-lb-header">
+      <div class="results-leaderboard-title">Rankings</div>
+      <div id="br-col-labels" class="br-col-labels" hidden>
+        <span class="br-col-group">Group</span>
+        <span class="br-col-you">You</span>
+      </div>
+    </div>
     <ol id="br-leaderboard" class="br-leaderboard"></ol>
   </div>
 
@@ -664,35 +703,35 @@
   // FLAVORS list (matches script.js)
   const FLAVORS = [
     { id:1,  name:'Very Cherry',         color:'#C0152B' },
-    { id:2,  name:'Strawberry Jam',      color:'#E8304A' },
+    { id:2,  name:'Strawberry Jam',      color:'#E8304A', pattern:'radial-gradient(circle at 30% 55%, #9B1020 8%, transparent 8%), radial-gradient(circle at 65% 35%, #9B1020 6%, transparent 6%), radial-gradient(circle at 50% 70%, #B8203A 7%, transparent 7%), radial-gradient(circle at 75% 60%, #9B1020 5%, transparent 5%)' },
     { id:3,  name:'Red Apple',           color:'#C62C1E' },
     { id:4,  name:'Sizzling Cinnamon',   color:'#B3220F' },
     { id:5,  name:'Orange Soda',         color:'#F47B20' },
-    { id:6,  name:'Sweet Peach',         color:'#F4A460' },
-    { id:7,  name:'Chili Mango',         color:'#F4952A' },
-    { id:8,  name:'Orange Sherbet',      color:'#FFA040' },
+    { id:6,  name:'Sweet Peach',         color:'#F4A460', pattern:'radial-gradient(ellipse at 60% 40%, #E8845A 30%, transparent 60%), radial-gradient(circle at 35% 65%, #F0B87A 40%, transparent 60%)' },
+    { id:7,  name:'Chili Mango',         color:'#F4952A', pattern:'radial-gradient(circle at 25% 40%, #CC2200 5%, transparent 5%), radial-gradient(circle at 55% 65%, #CC2200 4%, transparent 4%), radial-gradient(circle at 70% 30%, #BB1100 3%, transparent 3%), radial-gradient(circle at 40% 75%, #CC2200 4%, transparent 4%)' },
+    { id:8,  name:'Orange Sherbet',      color:'#FFA040', pattern:'radial-gradient(ellipse at 55% 45%, #FFD0A0 35%, transparent 55%), radial-gradient(ellipse at 30% 65%, #FF8820 40%, transparent 55%)' },
     { id:9,  name:'Pink Grapefruit',     color:'#F2738C' },
     { id:10, name:'Tangerine',           color:'#F28500' },
     { id:11, name:'Top Banana',          color:'#FFDD00' },
     { id:12, name:'Lemon',               color:'#FFF44F' },
-    { id:13, name:'Piña Colada',         color:'#FFFACD' },
-    { id:14, name:'Buttered Popcorn',    color:'#E8C840' },
-    { id:15, name:'Vanilla Bean',        color:'#F5F0DC' },
+    { id:13, name:'Piña Colada',         color:'#FFFACD', pattern:'radial-gradient(circle at 45% 50%, #FFF8E0 40%, transparent 60%), radial-gradient(circle at 70% 35%, #FAEAC0 30%, transparent 50%)' },
+    { id:14, name:'Buttered Popcorn',    color:'#E8C840', pattern:'radial-gradient(circle at 28% 42%, #8B6010 7%, transparent 7%), radial-gradient(circle at 62% 30%, #8B6010 5%, transparent 5%), radial-gradient(circle at 48% 68%, #7A5008 6%, transparent 6%), radial-gradient(circle at 72% 58%, #8B6010 5%, transparent 5%), radial-gradient(circle at 20% 65%, #7A5008 4%, transparent 4%)' },
+    { id:15, name:'Vanilla Bean',        color:'#F5F0DC', pattern:'radial-gradient(circle at 38% 45%, #3D1F00 2%, transparent 2%), radial-gradient(circle at 55% 38%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 44% 62%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 65% 55%, #3D1F00 2%, transparent 2%), radial-gradient(circle at 28% 58%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 60% 68%, #3D1F00 1.5%, transparent 1.5%), radial-gradient(circle at 48% 28%, #3D1F00 1%, transparent 1%)' },
     { id:16, name:'Cream Soda',          color:'#F5DEB3' },
-    { id:17, name:'Coconut',             color:'#F8F8F0' },
+    { id:17, name:'Coconut',             color:'#F8F8F0', pattern:'radial-gradient(circle at 35% 50%, #EDE8D8 35%, transparent 50%), radial-gradient(circle at 65% 40%, #E8E4D4 30%, transparent 45%), radial-gradient(circle at 50% 70%, #EAE6D6 25%, transparent 40%)' },
     { id:18, name:'Lemon Lime',          color:'#A8D400' },
     { id:19, name:'Juicy Pear',          color:'#B8D878' },
     { id:20, name:'Sour Apple',          color:'#5CB800' },
-    { id:21, name:'Watermelon',          color:'#FC5C7D' },
+    { id:21, name:'Watermelon',          color:'#FC5C7D', pattern:'radial-gradient(circle at 32% 48%, #1A8C00 5%, transparent 5%), radial-gradient(circle at 52% 62%, #1A8C00 4%, transparent 4%), radial-gradient(circle at 68% 40%, #1A8C00 4%, transparent 4%), radial-gradient(circle at 44% 72%, #1A8C00 3%, transparent 3%), radial-gradient(circle at 22% 60%, #1A8C00 4%, transparent 4%)' },
     { id:22, name:'Blue Raspberry',      color:'#0099CC' },
     { id:23, name:'Blueberry',           color:'#4A5FA5' },
     { id:24, name:'Grape Soda',          color:'#7B3FA0' },
     { id:25, name:'Wild Blackberry',     color:'#4B0082' },
-    { id:26, name:'Licorice',            color:'#1C1C1C' },
+    { id:26, name:'Licorice',            color:'#1C1C1C', pattern:'repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(255,255,255,0.06) 6px, rgba(255,255,255,0.06) 8px)' },
     { id:27, name:'Root Beer',           color:'#5C3317' },
-    { id:28, name:'Toasted Marshmallow', color:'#D2A679' },
-    { id:29, name:'Tutti-Fruitti',       color:'#FF69B4' },
-    { id:30, name:'Cotton Candy',        color:'#FFB7D5' },
+    { id:28, name:'Toasted Marshmallow', color:'#D2A679', pattern:'radial-gradient(ellipse at 40% 35%, #F5E8D0 35%, transparent 50%), radial-gradient(circle at 65% 55%, #A0622A 25%, transparent 40%), radial-gradient(circle at 30% 65%, #8C5020 20%, transparent 35%)' },
+    { id:29, name:'Tutti-Fruitti',       color:'#FF69B4', pattern:'radial-gradient(circle at 28% 42%, #FFE800 8%, transparent 8%), radial-gradient(circle at 58% 32%, #00CC44 7%, transparent 7%), radial-gradient(circle at 72% 60%, #0088FF 7%, transparent 7%), radial-gradient(circle at 40% 68%, #FF4400 6%, transparent 6%), radial-gradient(circle at 18% 62%, #FFAA00 6%, transparent 6%)' },
+    { id:30, name:'Cotton Candy',        color:'#FFB7D5', pattern:'linear-gradient(135deg, #99DDFF 0%, #BBEBFF 35%, #FFD0E8 55%, #FFB7D5 100%)' },
   ];
 
   function getFlavorBySeed(seed) { return FLAVORS[seed - 1]; }
@@ -807,6 +846,7 @@
   function styleVoteBtn(btn, flavor, seed) {
     btn.textContent = flavor.name;
     btn.style.backgroundColor = flavor.color;
+    btn.style.backgroundImage = flavor.pattern || '';
     btn.style.color = getTextColor(flavor.color);
     btn.style.borderColor = 'rgba(0,0,0,0.12)';
     btn.onclick = () => castVote(seed);
@@ -817,6 +857,7 @@
     const pill = document.getElementById('confirmed-choice-pill');
     pill.textContent = flavor.name;
     pill.style.backgroundColor = flavor.color;
+    pill.style.backgroundImage = flavor.pattern || '';
     pill.style.color = getTextColor(flavor.color);
     showView('confirmed');
   }
@@ -828,11 +869,13 @@
     const winnerPill = document.getElementById('reveal-winner-pill');
     winnerPill.textContent = winner.name;
     winnerPill.style.backgroundColor = winner.color;
+    winnerPill.style.backgroundImage = winner.pattern || '';
     winnerPill.style.color = getTextColor(winner.color);
 
     const loserPill = document.getElementById('reveal-loser-pill');
     loserPill.textContent = loser.name;
     loserPill.style.backgroundColor = loser.color;
+    loserPill.style.backgroundImage = loser.pattern || '';
     loserPill.style.color = getTextColor(loser.color);
 
     // Re-trigger animation
@@ -987,6 +1030,7 @@
         (match.winnerId === match.topSlot ? ' pick-selected' :
           match.winnerId !== null ? ' pick-eliminated' : '');
       topBtn.style.backgroundColor = topFlavor.color;
+      topBtn.style.backgroundImage = topFlavor.pattern || '';
       topBtn.style.color = getTextColor(topFlavor.color);
       topBtn.innerHTML = '<span class="pick-seed">' + match.topSlot + '</span>' + topFlavor.name;
       topBtn.onclick = () => selectPick(round, matchIndex, match.topSlot);
@@ -1000,6 +1044,7 @@
         (match.winnerId === match.bottomSlot ? ' pick-selected' :
           match.winnerId !== null ? ' pick-eliminated' : '');
       bottomBtn.style.backgroundColor = bottomFlavor.color;
+      bottomBtn.style.backgroundImage = bottomFlavor.pattern || '';
       bottomBtn.style.color = getTextColor(bottomFlavor.color);
       bottomBtn.innerHTML = '<span class="pick-seed">' + match.bottomSlot + '</span>' + bottomFlavor.name;
       bottomBtn.onclick = () => selectPick(round, matchIndex, match.bottomSlot);
@@ -1203,12 +1248,31 @@
     for (let seed = 1; seed <= 30; seed++) {
       const flavor = getFlavorBySeed(seed);
       results.push({
-        seed, name: flavor.name, color: flavor.color,
+        seed, name: flavor.name, color: flavor.color, pattern: flavor.pattern,
         avgRound: n > 0 ? totals[seed] / n : -1,
       });
     }
     results.sort((a, b) => b.avgRound - a.avgRound || a.seed - b.seed);
     return results;
+  }
+
+  function computeMyRankMap(state) {
+    if (!state) return null;
+    const scores = [];
+    for (let seed = 1; seed <= 30; seed++) {
+      let maxRound = -1;
+      for (let r = 0; r < 5; r++) {
+        if (!state.rounds[r]) continue;
+        for (const match of state.rounds[r]) {
+          if (match.winnerId === seed && r > maxRound) maxRound = r;
+        }
+      }
+      scores.push({ seed, maxRound });
+    }
+    scores.sort((a, b) => b.maxRound - a.maxRound || a.seed - b.seed);
+    const map = {};
+    scores.forEach((s, i) => { map[s.seed] = i + 1; });
+    return map;
   }
 
   function renderBracketResults(consensus, leaderboard) {
@@ -1217,8 +1281,13 @@
       const flavor = getFlavorBySeed(consensus.champion);
       champEl.textContent = flavor.name;
       champEl.style.backgroundColor = flavor.color;
+      champEl.style.backgroundImage = flavor.pattern || '';
       champEl.style.color = getTextColor(flavor.color);
     }
+
+    const myRankMap = computeMyRankMap(localState);
+    const colLabels = document.getElementById('br-col-labels');
+    colLabels.hidden = !myRankMap;
 
     const list = document.getElementById('br-leaderboard');
     list.innerHTML = '';
@@ -1234,10 +1303,24 @@
       pill.className = 'br-flavor-pill';
       pill.textContent = item.name;
       pill.style.backgroundColor = item.color;
+      pill.style.backgroundImage = item.pattern || '';
       pill.style.color = getTextColor(item.color);
 
       li.appendChild(rank);
       li.appendChild(pill);
+
+      if (myRankMap) {
+        const groupRank = idx + 1;
+        const myRank = myRankMap[item.seed];
+        const delta = groupRank - myRank; // positive = I ranked it higher than group
+        const myEl = document.createElement('span');
+        myEl.className = 'br-my-rank' +
+          (delta > 0 ? ' rank-better' : delta < 0 ? ' rank-worse' : ' rank-same');
+        myEl.textContent = delta > 0 ? '▲' + myRank : delta < 0 ? '▼' + myRank : '#' + myRank;
+        myEl.title = 'Your rank: #' + myRank;
+        li.appendChild(myEl);
+      }
+
       list.appendChild(li);
     });
   }

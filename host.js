@@ -239,6 +239,7 @@
     const el = document.getElementById(elId);
     el.textContent = flavor.name;
     el.style.backgroundColor = flavor.color;
+    el.style.backgroundImage = flavor.pattern || '';
     el.style.color = app.getTextColor(flavor.color);
   }
 
@@ -514,6 +515,7 @@
         seed,
         name: flavor.name,
         color: flavor.color,
+        pattern: flavor.pattern,
         avgRound: n > 0 ? totals[seed] / n : -1,
       });
     }
@@ -537,6 +539,7 @@
       pill.className = 'results-champion-pill';
       pill.textContent = flavor.name;
       pill.style.backgroundColor = flavor.color;
+      pill.style.backgroundImage = flavor.pattern || '';
       pill.style.color = app.getTextColor(flavor.color);
       championEl.appendChild(crown);
       championEl.appendChild(pill);
@@ -556,6 +559,7 @@
       pill.className = 'results-lb-pill';
       pill.textContent = item.name;
       pill.style.backgroundColor = item.color;
+      pill.style.backgroundImage = item.pattern || '';
       pill.style.color = app.getTextColor(item.color);
 
       li.appendChild(rank);
@@ -644,6 +648,20 @@
   document.getElementById('host-open-submissions-btn').addEventListener('click', openSubmissions);
   document.getElementById('host-close-results-btn').addEventListener('click', closeAndShowResults);
   document.getElementById('results-back-btn').addEventListener('click', hideResults);
+
+  // QR modal
+  document.getElementById('host-qr').addEventListener('click', () => {
+    const smallSrc = document.getElementById('host-qr').src;
+    document.getElementById('qr-modal-img').src = smallSrc.replace('200x200', '500x500');
+    document.getElementById('qr-modal-url').textContent = document.getElementById('host-join-url').textContent;
+    document.getElementById('qr-modal').hidden = false;
+  });
+  document.getElementById('qr-modal-backdrop').addEventListener('click', () => {
+    document.getElementById('qr-modal').hidden = true;
+  });
+  document.getElementById('qr-modal-close').addEventListener('click', () => {
+    document.getElementById('qr-modal').hidden = true;
+  });
 
   // ============================================================
   // EXPOSE HELPERS TO vote.html (not needed in host.js itself,

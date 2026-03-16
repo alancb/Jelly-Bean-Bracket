@@ -267,6 +267,7 @@ h1 {
    ============================================================ */
 .flavor-pill {
   background-color: var(--flavor-bg, #eee);
+  background-image: var(--flavor-pattern, none);
   color: var(--flavor-text, #333);
   border-radius: 999px;
   padding: 4px 11px;
@@ -344,6 +345,7 @@ h1 {
 #champion-display .champion-pill {
   display: inline-block;
   background-color: var(--flavor-bg, #ffd700);
+  background-image: var(--flavor-pattern, none);
   color: var(--flavor-text, #333);
   border-radius: 999px;
   padding: 8px 20px;
@@ -525,6 +527,64 @@ body.host-mode header {
   height: 68px;
   border-radius: 4px;
   border: 1px solid rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.host-qr:hover { opacity: 0.8; }
+
+/* ── QR enlarge modal ── */
+#qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#qr-modal[hidden] { display: none; }
+#qr-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  cursor: pointer;
+}
+.qr-modal-box {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  z-index: 1;
+}
+#qr-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+#qr-modal-close:hover { color: #333; }
+#qr-modal-img {
+  width: 280px;
+  height: 280px;
+  border-radius: 6px;
+  display: block;
+}
+.qr-modal-url {
+  font-size: 0.78rem;
+  color: #888;
+  text-align: center;
+  max-width: 280px;
+  word-break: break-all;
 }
 
 .host-join-url {

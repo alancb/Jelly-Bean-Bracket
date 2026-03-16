@@ -48,7 +48,7 @@
         <span id="host-session-code" class="host-code">----</span>
       </div>
       <div class="host-qr-group">
-        <img id="host-qr" class="host-qr" src="" alt="QR Code">
+        <img id="host-qr" class="host-qr" src="" alt="QR Code" title="Click to enlarge">
         <div class="host-join-url" id="host-join-url"></div>
       </div>
       <div class="host-info-bar-right">
@@ -120,6 +120,16 @@
   <div id="bracket-wrapper">
     <div id="bracket">
       <!-- Rendered by script.js -->
+    </div>
+  </div>
+
+  <!-- QR code enlarge modal -->
+  <div id="qr-modal" hidden>
+    <div id="qr-modal-backdrop"></div>
+    <div class="qr-modal-box">
+      <button id="qr-modal-close">&#x2715;</button>
+      <img id="qr-modal-img" src="" alt="QR Code">
+      <div id="qr-modal-url" class="qr-modal-url"></div>
     </div>
   </div>
 
